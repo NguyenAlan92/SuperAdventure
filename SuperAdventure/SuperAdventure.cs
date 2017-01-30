@@ -31,8 +31,12 @@ namespace SuperAdventure
                 _player = Player.CreateDefaultPlayer();            
             }
 
+            lblHitPoints.DataBindings.Add("Text", _player, "CurrentHitPoints");
+            lblGold.DataBindings.Add("Text", _player, "Gold");
+            lblExperience.DataBindings.Add("Text", _player, "ExperiencePoints");
+            lblLevel.DataBindings.Add("Text", _player, "Level");
+
             MoveTo(_player.CurrentLocation);
-            UpdatePlayerStats();
         }
 
         private void btnNorth_Click(object sender, EventArgs e)
@@ -82,9 +86,6 @@ namespace SuperAdventure
 
             //Completely heal the player
             _player.CurrentHitPoints = _player.MaximumHitPoints;
-
-            //Update Hit Points in UI
-            UpdatePlayerStats();
 
             //Does the location have a quest?
             if (newLocation.QuestAvailableHere != null)
@@ -392,10 +393,6 @@ namespace SuperAdventure
                     }
                 }
 
-                //Refresh player data on UI
-                //Gold and Experience points
-                UpdatePlayerStats();
-
                 //Inventory list and comboboxes
                 UpdateInventoryListInUI();
                 UpdateWeaponListInUI();
@@ -418,9 +415,6 @@ namespace SuperAdventure
                 _player.CurrentHitPoints -= damageTaken;
                 rtbMessages.Text += "You have taken " + damageTaken.ToString() + " damage from " + _currentMonster.Name + Environment.NewLine;
                 ScrollToBottomOfMessages();
-
-                //Refresh player data in UI
-                UpdatePlayerStats();
 
                 if (_player.CurrentHitPoints <= 0)
                 {
@@ -484,21 +478,12 @@ namespace SuperAdventure
             //Refresh player data in UI
             UpdateInventoryListInUI();
             UpdatePotionListInUI();
-            lblHitPoints.Text = _player.CurrentHitPoints.ToString();
         }
 
         private void ScrollToBottomOfMessages()
         {
             rtbMessages.SelectionStart = rtbMessages.Text.Length;
             rtbMessages.ScrollToCaret();
-        }
-
-        private void UpdatePlayerStats()
-        {
-            lblExperience.Text = _player.ExperiencePoints.ToString();
-            lblGold.Text = _player.Gold.ToString();
-            lblHitPoints.Text = _player.CurrentHitPoints.ToString();
-            lblLevel.Text = _player.Level.ToString();
         }
 
         private void SuperAdventure_FormClosing(object sender, FormClosingEventArgs e)
