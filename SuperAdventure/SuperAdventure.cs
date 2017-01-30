@@ -121,7 +121,7 @@ namespace SuperAdventure
                             rtbMessages.Text += Environment.NewLine;
                             ScrollToBottomOfMessages();
 
-                            _player.ExperiencePoints += newLocation.QuestAvailableHere.RewardExperiencePoints;
+                            _player.AddExperiencePoints(newLocation.QuestAvailableHere.RewardExperiencePoints);
                             _player.Gold += newLocation.QuestAvailableHere.RewardGold;
 
                             //Add the reward item to the player's inventory
@@ -333,7 +333,7 @@ namespace SuperAdventure
                 ScrollToBottomOfMessages();
 
                 //Give player experience points for killing the monster
-                _player.ExperiencePoints += _currentMonster.RewardExperiencePoints;
+                _player.AddExperiencePoints(_currentMonster.RewardExperiencePoints);
                 rtbMessages.Text += "You have received " + _currentMonster.RewardExperiencePoints + " experience points for killing " + _currentMonster.Name + "." + Environment.NewLine;
                 ScrollToBottomOfMessages();
 
